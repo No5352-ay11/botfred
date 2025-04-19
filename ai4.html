@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Mein Chatbot</title>
+</head>
+<body>
+  <h2>🧠 Frag den Bot!</h2>
+  <input type="text" id="userInput" placeholder="Was bedeutet Brot?" />
+  <button onclick="senden()">Senden</button>
+  <p id="antwort"></p>
+
+  <script>
+    async function senden() {
+      const frage = document.getElementById("userInput").value;
+      const response = await fetch("/chat", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({message: frage})
+      });
+      const data = await response.json();
+      document.getElementById("antwort").innerText = "Bot: " + data.response;
+    }
+  </script>
+</body>
+</html>
